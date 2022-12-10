@@ -1,5 +1,8 @@
+from pathlib import Path
+
+path = Path(__file__).with_name('input.txt')
 max_carrying = 0
-with open("/Users/ignacio.colombo/desarrollo/adventscode/1st/input.txt") as file:
+with path.open() as file:
     elf_carrying = 0
     for line in file:
         strippedLine = line.strip()

@@ -1,7 +1,9 @@
+from pathlib import Path
 from weapon import Weapon
 from expectedResultType import ExpectedResultType
 
-with open("/Users/ignacio.colombo/desarrollo/adventscode/2nd/input.txt") as file:
+path = Path(__file__).with_name('input.txt')
+with path.open() as file:
     total_score = 0
     for line in file:
         strippedLine = line.strip()
@@ -15,7 +17,7 @@ with open("/Users/ignacio.colombo/desarrollo/adventscode/2nd/input.txt") as file
     print(f"Part1 :: Total strategy score: {total_score}")
 
 
-with open("/Users/ignacio.colombo/desarrollo/adventscode/2nd/input.txt") as file:
+with path.open() as file:
     total_score = 0
     for line in file:
         strippedLine = line.strip()
