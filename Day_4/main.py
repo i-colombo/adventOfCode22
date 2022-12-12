@@ -4,6 +4,7 @@ from pathlib import Path
 path = Path(__file__).with_name('input.txt')
 with path.open() as file:
     fully_contained_assignments = 0
+    overlapped_assignments = 0
     for line in file:
         pair_assignment = line.strip()
         ranges = pair_assignment.split(",")
@@ -12,4 +13,9 @@ with path.open() as file:
         
         if first_elf_range.fullyContains(second_elf_range) or second_elf_range.fullyContains(first_elf_range):
             fully_contained_assignments += 1
+        
+        if first_elf_range.overlaps(second_elf_range):
+            overlapped_assignments += 1
+
     print(f"Part1 :: Total number of fully contained assignments: {fully_contained_assignments}")
+    print(f"Part2 :: Total number of overlapped assignments: {overlapped_assignments}")
