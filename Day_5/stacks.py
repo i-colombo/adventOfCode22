@@ -36,3 +36,9 @@ def moveFromTo(movements: int, stack_from: deque, stack_to: deque):
     for _ in range(movements):
         value = stack_from.pop()
         stack_to.append(value)
+
+def moveKeepingOrderFromTo(movements: int, stack_from: deque, stack_to: deque):
+    ordered_values = []
+    for _ in range(movements):
+        ordered_values.insert(0, stack_from.pop())
+    stack_to.extend(ordered_values)
