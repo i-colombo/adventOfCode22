@@ -2,8 +2,8 @@ from resources import Dir
 
 class Shell:
     def __init__(self):
-        self.current_dir = None
         self.main_dir = Dir("/")
+        self.current_dir = self.main_dir
 
     def command(self, command: str):
         if command.startswith("$ cd"):
