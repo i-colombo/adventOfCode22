@@ -8,7 +8,7 @@ with path.open() as file:
         row = [int(tree_height) for tree_height in line.strip()]
         forest_map.append(row)
 
-visibility_map = visibilityMap(forest_map)
+visibility_map = transformMap(forest_map, visibilityOf)
 
 total_visible_trees = countMap(visibility_map)
 
@@ -16,7 +16,7 @@ print(f"Part 1 :: Total visible trees: {total_visible_trees}")
 
 ######################  PART 2 ###################################
 
-scenic_map = scenicMap(forest_map)
+scenic_map = transformMap(forest_map, scenicOf)
 
 max_scenic_score = maxMap(scenic_map)
 

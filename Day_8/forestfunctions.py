@@ -1,10 +1,10 @@
-def visibilityMap(forest_map: list) -> list:
-    visibility_map = []
-    for i in range(len(forest_map)):
-        visibility_map.insert(i, [])
-        for j in range(len(forest_map[i])):
-            visibility_map[i].insert(j, visibilityOf(forest_map, i, j))
-    return visibility_map
+def transformMap(source_map: list, transform_func: 'function') -> list:
+    transformed_map = []
+    for i in range(len(source_map)):
+        transformed_map.insert(i, [])
+        for j in range(len(source_map[i])):
+            transformed_map[i].insert(j, transform_func(source_map, i, j))
+    return transformed_map
 
 def visibilityOf(forest_map: list, row: int, column: int) -> int:
     if row == 0 or row == len(forest_map) - 1:
@@ -61,15 +61,6 @@ def printMap(map:list):
         for j in range(len(map[i])):
             print(map[i][j], end=' ')
         print()
-
-
-def scenicMap(forest_map: list) -> list:
-    scenic_map = []
-    for i in range(len(forest_map)):
-        scenic_map.insert(i, [])
-        for j in range(len(forest_map[i])):
-            scenic_map[i].insert(j, scenicOf(forest_map, i, j))
-    return scenic_map
 
 def scenicOf(forest_map: list, row: int, column: int) -> int:
     if row == 0 or row == len(forest_map) - 1:
