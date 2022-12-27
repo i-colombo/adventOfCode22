@@ -1,15 +1,5 @@
 from pathlib import Path
-
-def isOdd20Divisor(value: int) -> bool:
-    divisor = value / 20
-    return divisor.is_integer() and divisor % 2 != 0
-
-def accumulated_strength(current_strength: int, cycle: int, x_value: int) -> int:
-    if cycle <= 220 and isOdd20Divisor(cycle):
-        strength = cycle * x_value
-        return current_strength + strength
-    else:
-        return current_strength
+from crtfunc import *
 
 path = Path(__file__).with_name('input.txt')
 cycle = 0
@@ -26,6 +16,25 @@ with path.open() as file:
             total_strength = accumulated_strength(total_strength, cycle, x)
             x += int(instruction[5:])
 
-print(f"Number of cycles: {cycle}")
-print(f"Value of X: {x}")
-print(f"Total Strength: {total_strength}")
+print(f"Part 1 :: Total Strength: {total_strength}")
+
+######################  PART 2 ###################################
+
+cycle = 0
+sprite_pos = 1
+total_strength = 0
+screen = []
+with path.open() as file:
+    for line in file:
+        instruction = line.strip()
+        cycle += 1
+        refreshScreen(screen, cycle, sprite_pos)
+
+        if instruction[:4] == 'addx':
+            cycle += 1
+            refreshScreen(screen, cycle, sprite_pos)
+            sprite_pos += int(instruction[5:])
+
+print("Part 2 :: Screen output:")
+for screen_row in screen:
+    print(screen_row)
