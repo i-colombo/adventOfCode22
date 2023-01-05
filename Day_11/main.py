@@ -1,9 +1,10 @@
 from pathlib import Path
-from monkeys import MonkeyBuilder
-from monkeys import Monkey
+from monkeys import *
+from functools import reduce
 
 path = Path(__file__).with_name('input.txt')
 current_monkey_builder = None
+monkeys_part_two = []
 with path.open() as file:
     for line in file:
         instruction = line.strip()
@@ -24,14 +25,14 @@ with path.open() as file:
         elif instruction[:9] == "If false:":
             calmed_target_monkey = int(instruction[26:])
             current_monkey_builder.setCalmedTargetMonkey(calmed_target_monkey)
-            current_monkey_builder.build()
+            Monkey.monkeys.append(current_monkey_builder.build())
+            monkeys_part_two.append(current_monkey_builder.build())
 
 number_of_rounds = 20
+divisor = 3
 for _ in range(number_of_rounds):
     for monkey in Monkey.monkeys:
-        monkey.throwItems()
-
-[print(monkey) for monkey in Monkey.monkeys]
+        monkey.throwItems(DivisorReliefCalculator(divisor))
 
 inspected_counts = [monkey.getInspectedItemsCount() for monkey in Monkey.monkeys]
 inspected_counts.sort(reverse=True)
@@ -39,3 +40,23 @@ print(f"Part 1 :: Inspected counts: {inspected_counts}")
 
 monkey_business = inspected_counts[0] * inspected_counts[1]
 print(f"Part 1 :: Monkey business: {monkey_business}")
+
+
+# :::::::::::::: PART TWO :::::::::::::::::::::
+
+Monkey.monkeys.clear()
+Monkey.monkeys.extend(monkeys_part_two)
+
+number_of_rounds = 10000
+modulus = reduce(lambda total_modulus, monkey: total_modulus * monkey.getTestWorryOperation(), Monkey.monkeys, 1)
+
+for _ in range(number_of_rounds):
+    for monkey in Monkey.monkeys:
+        monkey.throwItems(ModulusReliefCalculator(modulus))
+
+inspected_counts = [monkey.getInspectedItemsCount() for monkey in Monkey.monkeys]
+inspected_counts.sort(reverse=True)
+print(f"Part 2 :: Inspected counts: {inspected_counts}")
+
+monkey_business = inspected_counts[0] * inspected_counts[1]
+print(f"Part 2 :: Monkey business: {monkey_business}")
