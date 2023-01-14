@@ -1,25 +1,24 @@
 from pathlib import Path
-from graphs import Node
+from graphs import minimumDistancesTo
 
-path = Path(__file__).with_name('testInput.txt')
-map = []
+path = Path(__file__).with_name('input.txt')
+height_map = []
+start_vertex = 0
+finish_vertex = 0
 with path.open() as file:
-    map = [line.strip() for line in file.readlines()]
+    map_str = [line.strip() for line in file.readlines()]
+    for i, map_line in enumerate(map_str):
+        height_map.insert(i, [0] * len(map_line))
+        for j, map_item in enumerate(map_line):
+            if map_item == 'S':
+                height_map[i][j] = ord("a") - 97
+                start_vertex = i * len(map_line) + j
+            elif map_item == 'E':
+                height_map[i][j] = ord("z") - 97
+                finish_vertex = i * len(map_line) + j
+            else:
+                height_map[i][j] = ord(map_item) - 97
 
-nodes_map = []
-starting_node = None
-for i, map_line in enumerate(map):
-    nodes_map.insert(i, [])
-    for j, map_item in enumerate(map_line):
-        related_nodes = []
-        if i > 0:
-            related_nodes.append(nodes_map[i-1][j])
-        if j > 0:
-            related_nodes.append(nodes_map[i][j-1])
-        node = Node(map_item, related_nodes)
-        nodes_map[i].append(node)
-        if map_item == "S":
-            starting_node = node
+min_distances = minimumDistancesTo(height_map, start_vertex)
 
-print(starting_node.minimumStepsToFinish(set()))
-
+print(f"Part 1 :: Minimum steps to top: {min_distances[finish_vertex]}" )
