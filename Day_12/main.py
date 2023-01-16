@@ -7,6 +7,12 @@ def uphillConnectionWeightCalculator(current_height: int, connection_height: int
     else:
         return 0
 
+def downhillConnectionWeightCalculator(current_height: int, connection_height: int) -> int:
+    if current_height - connection_height  <= 1:
+        return 1
+    else:
+        return 0
+
 path = Path(__file__).with_name('input.txt')
 height_map = []
 start_vertex = 0
@@ -32,4 +38,12 @@ with path.open() as file:
 adjacency_map = adjacencyMapFromHeightMap(height_map, uphillConnectionWeightCalculator)
 min_distances = minimumDistancesStartingFrom(adjacency_map, start_vertex)
 
-print(f"Part 1 :: Minimum steps to top: {min_distances[finish_vertex]}" )
+print(f"Part 1 :: Minimum steps to top: {min_distances[finish_vertex]}")
+
+adjacency_map = adjacencyMapFromHeightMap(height_map, downhillConnectionWeightCalculator)
+min_distances = minimumDistancesStartingFrom(adjacency_map, finish_vertex)
+
+min_distance_to_lower_elevation = min([min_distances[lower_elevation_index] for lower_elevation_index in lower_elevation_indexes])
+
+print(f"Part 2 :: Minimum steps from lower elevation: {min_distance_to_lower_elevation}")
+
